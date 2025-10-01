@@ -42,18 +42,28 @@ total_reviews = reviews.count()
 # Look at the first 50 rows of that dataframe. 
 # Which value appears to be the most common?
 product_categories = spark.sql('SELECT product_category FROM reviews')
-# product_categories.show(n=50)
+# product_categories.show(50)
+# +-------------------+
+# |   product_category|
+# +-------------------+
+# |Digital_Video_Games|
+product_categories = spark.sql('SELECT product_category, COUNT(*) FROM (SELECT * FROM reviews LIMIT 50) GROUP BY product_category')
 # Digital_Video_Games
+# +-------------------+--------+
+# |   product_category|count(1)|
+# +-------------------+--------+
+# |Digital_Video_Games|      50|
+# +-------------------+--------+
 
 # Question 7: Find the most helpful review in the dataframe - the one with the highest number of helpful votes.
 # What is the product title for that review? How many helpful votes did it have?
-helpful_reviews = spark.sql('SELECT helpful_votes, product_title FROM reviews ORDER BY helpful_votes DESC LIMIT 1')
+helpful_reviews = spark.sql('SELECT cast(helpful_votes as int), product_title FROM reviews ORDER BY helpful_votes DESC LIMIT 1')
 # helpful_reviews.show(n=1, truncate=False)
-# +-------------+----------------------+
-# |helpful_votes|product_title         |
-# +-------------+----------------------+
-# |993          |Xbox Live Subscription|
-# +-------------+----------------------+
+# +-------------+-------------------------+
+# |helpful_votes|product_title            |
+# +-------------+-------------------------+
+# |5068         |SimCity - Limited Edition|
+# +-------------+-------------------------+
 
 # Question 8: How many reviews exist in the dataframe with a 5 star rating?
 five_star_reviews_count = spark.sql('SELECT COUNT(*) FROM reviews WHERE star_rating = 5')
