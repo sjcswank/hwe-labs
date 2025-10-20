@@ -161,16 +161,16 @@ reveiws_with_timestamp.show(3)
 
 print('\nQuestion 10: Write the dataframe with load timestamp to s3a://hwe-$CLASS/$HANDLE/bronze/reviews_static in Parquet format.')
 #Make sure to write it using overwrite mode: append will keep appending duplicates, which will cause problems in later labs...
-# save_location = f"s3a://hwe-fall-2025/{aws_handle}/bronze/reviews_static"
-print("reveiws_with_timestamp.write.mode('overwrite').parquet(save_location)")
+save_location = f"s3a://hwe-fall-2025/{aws_handle}/bronze/reviews_static"
+reveiws_with_timestamp.write.mode('overwrite').parquet(save_location)
 
 print('''\nQuestion 11: Read the tab separated file named "resources/customers.tsv.gz" into a dataframe
 Write to S3 under s3a://hwe-$CLASS/$HANDLE/bronze/customers''')
 #Make sure to write it using overwrite mode: append will keep appending duplicates, which will cause problems in later labs...
 #There are no questions to answer about this data set right now, but you will use it in a later lab...
 customers = spark.read.csv('resources/customers.tsv.gz', sep='\t', header=True)
-# save_location = f"s3a://hwe-fall-2025/{aws_handle}/bronze/customers"
-print("customers.write.mode('overwrite').parquet(save_location)")
+save_location = f"s3a://hwe-fall-2025/{aws_handle}/bronze/customers"
+customers.write.mode('overwrite').parquet(save_location)
 
 print('\nQuestion 12: Display the schema of the customers dataframe.')
 #This will be useful when you use it in a later lab...
